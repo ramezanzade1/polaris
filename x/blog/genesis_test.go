@@ -32,6 +32,15 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		SendPostCount: 2,
+		TimedoutPostList: []types.TimedoutPost{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		TimedoutPostCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -49,5 +58,7 @@ func TestGenesis(t *testing.T) {
 	require.Equal(t, genesisState.PostCount, got.PostCount)
 	require.ElementsMatch(t, genesisState.SendPostList, got.SendPostList)
 	require.Equal(t, genesisState.SendPostCount, got.SendPostCount)
+	require.ElementsMatch(t, genesisState.TimedoutPostList, got.TimedoutPostList)
+	require.Equal(t, genesisState.TimedoutPostCount, got.TimedoutPostCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

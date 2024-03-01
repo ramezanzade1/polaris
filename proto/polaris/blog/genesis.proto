@@ -6,16 +6,19 @@ import "gogoproto/gogo.proto";
 import "polaris/blog/params.proto";
 import "polaris/blog/post.proto";
 import "polaris/blog/send_post.proto";
+import "polaris/blog/timedout_post.proto";
 
 option go_package = "polaris/x/blog/types";
 
 // GenesisState defines the blog module's genesis state.
 message GenesisState {
-           Params   params        = 1 [(gogoproto.nullable) = false];
-           string   port_id       = 2;
-  repeated Post     postList      = 3 [(gogoproto.nullable) = false];
-           uint64   postCount     = 4;
-  repeated SendPost sendPostList  = 5 [(gogoproto.nullable) = false];
-           uint64   sendPostCount = 6;
+           Params       params            = 1 [(gogoproto.nullable) = false];
+           string       port_id           = 2;
+  repeated Post         postList          = 3 [(gogoproto.nullable) = false];
+           uint64       postCount         = 4;
+  repeated SendPost     sendPostList      = 5 [(gogoproto.nullable) = false];
+           uint64       sendPostCount     = 6;
+  repeated TimedoutPost timedoutPostList  = 7 [(gogoproto.nullable) = false];
+           uint64       timedoutPostCount = 8;
 }
 

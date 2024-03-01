@@ -8,6 +8,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "polaris/blog/params.proto";
 import "polaris/blog/post.proto";
 import "polaris/blog/send_post.proto";
+import "polaris/blog/timedout_post.proto";
 
 option go_package = "polaris/x/blog/types";
 
@@ -37,6 +38,16 @@ service Query {
   }
   rpc SendPostAll (QueryAllSendPostRequest) returns (QueryAllSendPostResponse) {
     option (google.api.http).get = "/polaris/blog/send_post";
+  
+  }
+  
+  // Queries a list of TimedoutPost items.
+  rpc TimedoutPost    (QueryGetTimedoutPostRequest) returns (QueryGetTimedoutPostResponse) {
+    option (google.api.http).get = "/polaris/blog/timedout_post/{id}";
+  
+  }
+  rpc TimedoutPostAll (QueryAllTimedoutPostRequest) returns (QueryAllTimedoutPostResponse) {
+    option (google.api.http).get = "/polaris/blog/timedout_post";
   
   }
 }
@@ -82,5 +93,22 @@ message QueryAllSendPostRequest {
 message QueryAllSendPostResponse {
   repeated SendPost                               SendPost   = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetTimedoutPostRequest {
+  uint64 id = 1;
+}
+
+message QueryGetTimedoutPostResponse {
+  TimedoutPost TimedoutPost = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllTimedoutPostRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllTimedoutPostResponse {
+  repeated TimedoutPost                           TimedoutPost = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination   = 2;
 }
 

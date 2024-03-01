@@ -38,3 +38,8 @@ const (
 	SendPostKey      = "SendPost/value/"
 	SendPostCountKey = "SendPost/count/"
 )
+
+const (
+	TimedoutPostKey      = "TimedoutPost/value/"
+	TimedoutPostCountKey = "TimedoutPost/count/"
+)
