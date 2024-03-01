@@ -11,8 +11,9 @@ const DefaultIndex uint64 = 1
 // DefaultGenesis returns the default genesis state
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
-		PortId:   PortID,
-		PostList: []Post{},
+		PortId:       PortID,
+		PostList:     []Post{},
+		SendPostList: []SendPost{},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
@@ -35,6 +36,18 @@ func (gs GenesisState) Validate() error {
 			return fmt.Errorf("post id should be lower or equal than the last id")
 		}
 		postIdMap[elem.Id] = true
+	}
+	// Check for duplicated ID in sendPost
+	sendPostIdMap := make(map[uint64]bool)
+	sendPostCount := gs.GetSendPostCount()
+	for _, elem := range gs.SendPostList {
+		if _, ok := sendPostIdMap[elem.Id]; ok {
+			return fmt.Errorf("duplicated id for sendPost")
+		}
+		if elem.Id >= sendPostCount {
+			return fmt.Errorf("sendPost id should be lower or equal than the last id")
+		}
+		sendPostIdMap[elem.Id] = true
 	}
 	// this line is used by starport scaffolding # genesis/types/validate
 

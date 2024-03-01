@@ -23,6 +23,15 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		PostCount: 2,
+		SendPostList: []types.SendPost{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		SendPostCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -38,5 +47,7 @@ func TestGenesis(t *testing.T) {
 
 	require.ElementsMatch(t, genesisState.PostList, got.PostList)
 	require.Equal(t, genesisState.PostCount, got.PostCount)
+	require.ElementsMatch(t, genesisState.SendPostList, got.SendPostList)
+	require.Equal(t, genesisState.SendPostCount, got.SendPostCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

@@ -7,6 +7,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "polaris/blog/params.proto";
 import "polaris/blog/post.proto";
+import "polaris/blog/send_post.proto";
 
 option go_package = "polaris/x/blog/types";
 
@@ -26,6 +27,16 @@ service Query {
   }
   rpc PostAll (QueryAllPostRequest) returns (QueryAllPostResponse) {
     option (google.api.http).get = "/polaris/blog/post";
+  
+  }
+  
+  // Queries a list of SendPost items.
+  rpc SendPost    (QueryGetSendPostRequest) returns (QueryGetSendPostResponse) {
+    option (google.api.http).get = "/polaris/blog/send_post/{id}";
+  
+  }
+  rpc SendPostAll (QueryAllSendPostRequest) returns (QueryAllSendPostResponse) {
+    option (google.api.http).get = "/polaris/blog/send_post";
   
   }
 }
@@ -53,6 +64,23 @@ message QueryAllPostRequest {
 
 message QueryAllPostResponse {
   repeated Post                                   Post       = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetSendPostRequest {
+  uint64 id = 1;
+}
+
+message QueryGetSendPostResponse {
+  SendPost SendPost = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllSendPostRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllSendPostResponse {
+  repeated SendPost                               SendPost   = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
