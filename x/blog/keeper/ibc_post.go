@@ -72,12 +72,18 @@ func (k Keeper) OnAcknowledgementIbcPostPacket(ctx sdk.Context, packet channelty
 			return errors.New("cannot unmarshal acknowledgment")
 		}
 
-		// TODO: successful acknowledgement logic
+		// successful acknowledgement logic
+		k.AppendSendPost(ctx, types.SendPost{
+			Creator: data.Creator,
+			PostID:  packetAck.PostID,
+			Title:   data.Title,
+			Chain:   packet.DestinationPort + "_" + packet.DestinationChannel + "_",
+		})
 
 		return nil
 	default:
 		// The counter-party module doesn't implement the correct acknowledgment format
-		return errors.New("invalid acknowledgment format")
+		return errors.New("the counter-party module does not implement the correct acknowledgment format")
 	}
 }
 
