@@ -4,12 +4,15 @@ package polaris.blog;
 
 import "gogoproto/gogo.proto";
 import "polaris/blog/params.proto";
+import "polaris/blog/post.proto";
 
 option go_package = "polaris/x/blog/types";
 
 // GenesisState defines the blog module's genesis state.
 message GenesisState {
-  Params params  = 1 [(gogoproto.nullable) = false];
-  string port_id = 2;
+           Params params    = 1 [(gogoproto.nullable) = false];
+           string port_id   = 2;
+  repeated Post   postList  = 3 [(gogoproto.nullable) = false];
+           uint64 postCount = 4;
 }
 
