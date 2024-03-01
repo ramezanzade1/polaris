@@ -1,0 +1,13 @@
+syntax = "proto3";
+package polaris.blog;
+
+option go_package = "polaris/x/blog/types";
+
+message BlogPacketData {
+    oneof packet {
+        NoData noData = 1;
+    }
+}
+
+message NoData {
+}

@@ -1,0 +1,7 @@
+syntax = "proto3";
+package polaris.blog;
+
+option go_package = "polaris/x/blog/types";
+
+// Msg defines the Msg service.
+service Msg {}
