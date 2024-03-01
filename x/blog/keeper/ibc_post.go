@@ -2,13 +2,13 @@ package keeper
 
 import (
 	"errors"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	clienttypes "github.com/cosmos/ibc-go/v6/modules/core/02-client/types"
 	channeltypes "github.com/cosmos/ibc-go/v6/modules/core/04-channel/types"
 	host "github.com/cosmos/ibc-go/v6/modules/core/24-host"
 	"polaris/x/blog/types"
+	"strconv"
 )
 
 // TransmitIbcPostPacket transmits the packet over IBC with the specified source port and source channel
@@ -39,13 +39,21 @@ func (k Keeper) OnRecvIbcPostPacket(ctx sdk.Context, packet channeltypes.Packet,
 	if err := data.ValidateBasic(); err != nil {
 		return packetAck, err
 	}
+	id := k.AppendPost(
+		ctx,
+		types.Post{
+			Creator: packet.SourcePort + "_" + packet.SourceChannel + "_" + data.Creator,
+			Title:   data.Title,
+			Content: data.Content,
+		})
 
-	// TODO: packet reception logic
+	// packet reception logic
+	packetAck.PostID = strconv.FormatUint(id, 10)
 
 	return packetAck, nil
 }
 
-// OnAcknowledgementIbcPostPacket responds to the the success or failure of a packet
+// OnAcknowledgementIbcPostPacket responds to the success or failure of a packet
 // acknowledgement written on the receiving chain.
 func (k Keeper) OnAcknowledgementIbcPostPacket(ctx sdk.Context, packet channeltypes.Packet, data types.IbcPostPacketData, ack channeltypes.Acknowledgement) error {
 	switch dispatchedAck := ack.Response.(type) {
