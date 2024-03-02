@@ -51,7 +51,6 @@ ignite relayer connect
 ### Configure
 
 The Polaris blockchain development can be configured with `polaris.yml`.
-The Meris blockchain development can be configured with `meris.yml`.
 
 
 
